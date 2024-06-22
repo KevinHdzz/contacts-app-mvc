@@ -1,0 +1,17 @@
+{
+    "name": "kevinhdzz/contacts-app-repository",
+    "description": "Contacts application using the Repository pattern for data manipulation",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "ContactsApp\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kevin Hernandez",
+            "email": "kevinhz2022@gmail.com"
+        }
+    ],
+    "require": {}
+}
