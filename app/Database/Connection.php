@@ -15,8 +15,7 @@ class Connection {
      */
     private ?PDO $conn;
     
-    public function __construct()
-    {
+    public function __construct() {
         $this->config = (require __DIR__ . "/../../config/config.php")["database"];
     }
 
@@ -25,8 +24,7 @@ class Connection {
      * 
      * @return PDO|null PDO object or null if connection fails.
      */
-    public function getConnection(): ?PDO
-    {
+    public function getConnection(): ?PDO {
         $this->conn = null;
         
         $dsn = "mysql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['dbname']}";

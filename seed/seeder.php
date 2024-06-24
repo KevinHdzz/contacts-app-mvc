@@ -1,5 +1,4 @@
 <?php
-// /seed/seeder.php
 
 require __DIR__ . "/../vendor/autoload.php";
 
