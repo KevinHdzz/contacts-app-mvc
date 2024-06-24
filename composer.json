@@ -7,6 +7,10 @@
             "ContactsApp\\": "app/"
         }
     },
+    "scripts": {
+        "db:insert": "php app/seed/seeder.php -i",
+        "db:delete": "php app/seed/seeder.php -d"
+    },
     "authors": [
         {
             "name": "Kevin Hernandez",

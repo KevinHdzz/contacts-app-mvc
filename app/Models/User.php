@@ -3,14 +3,14 @@
 namespace ContactsApp\Models;
 
 class User {
-    protected string $userName;
+    protected string $username;
     protected string $email;
     protected string $password;
     protected ?string $imgName;
 
-    public function __construct(string $userName, string $email, string $password, ?string $imgName)
+    public function __construct(string $username, string $email, string $password, ?string $imgName)
     {
-        $this->userName = $userName;
+        $this->username = $username;
         $this->email = $email;
         $this->password = $password;
         $this->imgName = $imgName;
