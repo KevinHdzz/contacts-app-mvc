@@ -22,20 +22,18 @@ class Connection {
     /**
      * Create and return a new database connection.
      * 
-     * @return PDO|null PDO object or null if connection fails.
+     * @throws PDOException If the attempt to connect to the requested database fails.
+     * 
+     * @return PDO Connection object.
      */
-    public function getConnection(): ?PDO {
+    public function getConnection(): PDO {
         $this->conn = null;
         
         $dsn = "mysql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['dbname']}";
 
-        try {
-            $this->conn = new PDO($dsn, $this->config["username"], $this->config["password"]);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $this->conn;
-        } catch (PDOException $e) {
-            echo "Error during connection.";
-            return null;
-        }
+        $this->conn = new PDO($dsn, $this->config["username"], $this->config["password"]);
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return $this->conn;
     }
 }

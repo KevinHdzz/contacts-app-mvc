@@ -1,6 +1,6 @@
 <?php
 
-namespace ContactsApp\Repository\Interfaces;
+namespace ContactsApp\Repositories;
 
 use ContactsApp\Models\User;
 use ContactsApp\Models\UserId;

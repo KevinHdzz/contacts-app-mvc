@@ -4,20 +4,18 @@ require __DIR__ . "/../vendor/autoload.php";
 
 $conn = (new \ContactsApp\Database\Connection())->getConnection();
 
-if ($argv[1] == "-i") {
-    try {
+try {
+    if ($argv[1] == "-i") {
+        $err_msg = "Error importing data";
         import($conn);
         echo "Data imported successfully." . PHP_EOL;
-    } catch (PDOException $e) {
-        echo "Error importing data: " . $e->getMessage() . PHP_EOL;
-    }
-} else if ($argv[1] == "-d") {
-    try {
+    } else if ($argv[1] == "-d") {
+        $err_msg = "Error deleting data";
         delete($conn);
         echo "Data deleted successfully." . PHP_EOL;
-    } catch (PDOException $e) {
-        echo "Error deleting data: " . $e->getMessage() . PHP_EOL; 
     }
+} catch (PDOException $e) {
+    echo "$err_msg: {$e->getMessage()}";
 }
 
 /**
@@ -73,3 +71,20 @@ function delete(PDO $conn): void {
     $conn->exec("DELETE FROM contacts");
     $conn->exec("DELETE FROM users");
 }
+
+
+// if ($argv[1] == "-i") {
+//     try {
+//         import($conn);
+//         echo "Data imported successfully." . PHP_EOL;
+//     } catch (PDOException $e) {
+//         echo "Error importing data: " . $e->getMessage() . PHP_EOL;
+//     }
+// } else if ($argv[1] == "-d") {
+//     try {
+//         delete($conn);
+//         echo "Data deleted successfully." . PHP_EOL;
+//     } catch (PDOException $e) {
+//         echo "Error deleting data: " . $e->getMessage() . PHP_EOL; 
+//     }
+// }
