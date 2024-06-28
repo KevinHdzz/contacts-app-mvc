@@ -17,6 +17,30 @@ abstract class BaseModel {
      */
     protected static PDO $conn;
 
+    public function __get(string $name): mixed
+    {
+        return $this->$name;
+    }
+
+    public function __set(string $name, mixed $value): void
+    {
+        $this->$name = $value;
+    }
+
+    /**
+     * Sets the property id;
+     * 
+     * @param int $id
+     * 
+     * @return static The current instance.
+     */
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * Sets the database connection.
      * 
@@ -84,7 +108,7 @@ abstract class BaseModel {
     /**
      * Saves the current model in the database.
      * 
-     * @return $this
+     * @return static The current instance.
      * 
      * @throws PDOException On Error during database operation.
      */
@@ -93,7 +117,7 @@ abstract class BaseModel {
     /**
      * Updates the current model in the database.
      * 
-     * @return $this
+     * @return static The current instance.
      * 
      * @throws PDOException On Error during database operation.
      */
@@ -103,7 +127,8 @@ abstract class BaseModel {
      * Converts a database row to an object of the concrete class.
      *
      * @param array $row The database row.
-     * @return static    The object of the concrete class.
+     * 
+     * @return static An object of the concrete class.
      */
     abstract protected static function objFromRow(array $row): static;
 }

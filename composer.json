@@ -5,7 +5,8 @@
     "autoload": {
         "psr-4": {
             "ContactsApp\\": "app/"
-        }
+        },
+        "files": ["utils/functions.php"]
     },
     "scripts": {
         "db:insert": "php app/seed/seeder.php -i",
