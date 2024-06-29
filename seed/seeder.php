@@ -71,20 +71,3 @@ function delete(PDO $conn): void {
     $conn->exec("DELETE FROM contacts");
     $conn->exec("DELETE FROM users");
 }
-
-
-// if ($argv[1] == "-i") {
-//     try {
-//         import($conn);
-//         echo "Data imported successfully." . PHP_EOL;
-//     } catch (PDOException $e) {
-//         echo "Error importing data: " . $e->getMessage() . PHP_EOL;
-//     }
-// } else if ($argv[1] == "-d") {
-//     try {
-//         delete($conn);
-//         echo "Data deleted successfully." . PHP_EOL;
-//     } catch (PDOException $e) {
-//         echo "Error deleting data: " . $e->getMessage() . PHP_EOL; 
-//     }
-// }

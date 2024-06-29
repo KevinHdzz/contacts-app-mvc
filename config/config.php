@@ -2,11 +2,11 @@
 
 return [
     "database" => [
-        "host" => "127.0.0.1",
-        "dbname" => "contacts_app_repository",
-        "username" => "root",
-        "password" => "",
-        "port" => "3306",
+        "host" => $_ENV["DB_HOST"],
+        "dbname" => $_ENV["DB_DATABASE"],
+        "username" => $_ENV["DB_USERNAME"],
+        "password" => $_ENV["DB_PASSWORD"],
+        "port" => $_ENV["DB_PORT"],
     ],
     # some others settings...
 ];
