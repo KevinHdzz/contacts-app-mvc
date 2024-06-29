@@ -5,7 +5,7 @@ namespace ContactsApp\Database;
 use PDO;
 use PDOException;
 
-class Connection {
+class Connector {
     /**
      * @var array $config  Array with database connection credentials.
      */
@@ -35,6 +35,7 @@ class Connection {
 
         $this->conn = new PDO($dsn, $this->config["username"], $this->config["password"]);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
         return $this->conn;
     }
