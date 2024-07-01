@@ -9,7 +9,7 @@ class View {
      * Renders a view.
      * 
      * @param string $view             View file name (without .php extension).
-     * @param array $data  [Optional]  An associative array of data to pass to the view.
+     * @param array $data [Optional]  An associative array of data to pass to the view.
      * 
      * @throws Exception  If the view file is not found.
      */
