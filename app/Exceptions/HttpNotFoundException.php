@@ -1,6 +1,6 @@
 <?php
 
-namespace ContactsApp\Http;
+namespace ContactsApp\Exceptions;
 
 use Exception;
 

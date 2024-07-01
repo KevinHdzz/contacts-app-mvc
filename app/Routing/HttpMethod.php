@@ -1,6 +1,6 @@
 <?php
 
-namespace ContactsApp\Http;
+namespace ContactsApp\Routing;
 
 enum HttpMethod: string {
     case GET = "GET";

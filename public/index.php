@@ -1,14 +1,17 @@
 <?php
 
-use ContactsApp\Http\HttpNotFoundException;
+use ContactsApp\Exceptions\HttpNotFoundException;
 use ContactsApp\Routing\Router;
-use ContactsApp\View\View;
+use ContactsApp\Controllers\HomeController;
+use ContactsApp\Models\Contact;
+use ContactsApp\Models\User;
 
 require "../bootstrap/app.php";
 
-Router::get("/", fn () => View::render(
-    "home", ["message" => "Hello From Home"],
-));
+Router::get("/", fn() => header("Location: /home"));
+Router::get("/home", [HomeController::class, "home"]);
+
+Router::get("/login", fn() => debug("Login..."));
 
 try {
     Router::resolve();

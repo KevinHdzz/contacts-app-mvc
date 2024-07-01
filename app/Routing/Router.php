@@ -4,8 +4,7 @@ namespace ContactsApp\Routing;
 
 use Closure;
 
-use ContactsApp\Http\HttpMethod;
-use ContactsApp\Http\HttpNotFoundException;
+use ContactsApp\Exceptions\HttpNotFoundException;
 
 class Router {
     /**
@@ -28,6 +27,7 @@ class Router {
         $route = $_SERVER["PATH_INFO"] ?? "/";
         $method = $_SERVER["REQUEST_METHOD"];
 
+        $route = $route != "/" && str_ends_with($route, "/") ? substr($route, 0, strlen($route) - 1) : $route;
         $action = self::$routes[$method][$route] ?? null;
 
         if (is_null($action)) {

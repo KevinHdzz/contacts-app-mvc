@@ -1,0 +1,131 @@
+:root {
+    --primary: #0CA789;
+    --pale-aqua: #f4f8f7;
+    /* --pale-aqua: #f6f7f6; */
+    --dark: #212121;
+    --primary-font: "Rubik", sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 18px;
+    font-family: var(--primary-font);
+}
+
+.large-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.small-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: var(--primary);
+    color: white;
+    padding: .8rem 2rem;
+    border-radius: 5%;
+}
+
+.flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-2 {
+    gap: 2rem;
+}
+
+.gap-3 {
+    gap: 3rem;
+}
+
+.no-email {
+    color: #5c5b5b;
+}
+
+.header {
+    background-color: var(--pale-aqua);
+    padding: 2.4rem 4rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: var(--dark);
+    text-decoration: none;
+}
+
+.navbar-logo {
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.navbar-nav svg {
+    cursor: pointer;
+}
+
+.main {
+    margin-top: 8rem;
+}
+
+.new-contact {
+    padding: 3rem 0;
+}
+
+.new-contact-btn {
+    padding: 1.2rem 2.4rem;
+}
+
+.contacts {
+    padding: 1rem 2rem;
+}
+
+.contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact .name p {
+    font-size: 2rem;
+}
+
+.contact .remaining-fields {
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+}
+
+.contact .remaining-fields .phone {
+    gap: .5rem;
+    font-weight: 500;
+    color: #04b445;
+}
+
+.contact .remaining-fields .options-icon {
+    cursor: pointer;
+}

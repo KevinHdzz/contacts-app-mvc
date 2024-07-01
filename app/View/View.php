@@ -21,6 +21,8 @@ class View {
             throw new Exception("View file not found: $viewFile");
         }
 
+        extract($data);
+
         include_once $viewFile;
     }
 }

@@ -5,7 +5,6 @@ namespace ContactsApp\Models;
 class User extends BaseModel {
     protected static string $table = "users";
 
-    protected readonly int $id;
     protected string $username;
     protected string $email;
     protected string $password;

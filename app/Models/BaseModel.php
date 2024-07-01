@@ -17,15 +17,10 @@ abstract class BaseModel {
      */
     protected static PDO $conn;
 
-    public function __get(string $name): mixed
-    {
-        return $this->$name;
-    }
-
-    public function __set(string $name, mixed $value): void
-    {
-        $this->$name = $value;
-    }
+    /**
+     * @var int $id Model ID.
+     */
+    protected readonly int $id;
 
     /**
      * Sets the property id;
@@ -34,11 +29,21 @@ abstract class BaseModel {
      * 
      * @return static The current instance.
      */
-    public function setId(int $id): static
+    protected function setId(int $id): static
     {
         $this->id = $id;
 
         return $this;
+    }
+    
+    public function __get(string $name): mixed
+    {
+        return $this->$name;
+    }
+
+    public function __set(string $name, mixed $value): void
+    {
+        $this->$name = $value;
     }
 
     /**
