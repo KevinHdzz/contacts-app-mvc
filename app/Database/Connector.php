@@ -17,7 +17,7 @@ class Connector {
     
     public function __construct()
     {
-        $this->config = (require __DIR__ . "/../../config/config.php")["database"];
+        $this->config = (require __DIR__ . "/../../config/database.php");
     }
 
     /**

@@ -8,14 +8,17 @@ use ContactsApp\View\View;
 class HomeController {
     public static function home(): void
     {
-        if (!is_auth())
-        {
+        if (!is_auth()) {
             header("Location: /login");
-            exit();
+            return;
         }
         
         $contacts = Contact::all();
 
-        View::render("home", ["contacts" => $contacts]);
+        View::render("home", [
+            "title" => "Home",
+            "contacts" => $contacts,
+            "user" => $_SESSION["user"],
+        ]);
     }
 }

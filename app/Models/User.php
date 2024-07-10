@@ -39,7 +39,7 @@ class User extends BaseModel {
                 ":img_name" => $this->imgName,
             ]);
 
-        return $this;
+        return $this->setId(self::$conn->lastInsertId());
     }
 
     /**
@@ -79,5 +79,16 @@ class User extends BaseModel {
         return (
             new self($row["username"], $row["email"], $row["password"], $row["img_name"])
         )->setId($row["id"]);
+    }
+
+
+    public function hashPassword(): void
+    {
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function comparePassword(string $password): bool
+    {
+        return password_verify($password, $this->password);
     }
 }

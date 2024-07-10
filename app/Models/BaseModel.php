@@ -3,6 +3,7 @@
 namespace ContactsApp\Models;
 
 use PDO;
+use PDOException;
 
 /**
  * Abstract BaseModel class that defines basic methods for models interacting with the database.
@@ -29,7 +30,7 @@ abstract class BaseModel {
      * 
      * @return static The current instance.
      */
-    protected function setId(int $id): static
+    public function setId(int $id): static
     {
         $this->id = $id;
 
@@ -108,6 +109,57 @@ abstract class BaseModel {
     {
         $stmt = self::$conn->prepare("DELETE FROM " . static::$table . " WHERE id = :id");
         $stmt->execute([":id" => $id]);
+    }
+
+    /**
+     * Get the models where `$column` = `$value`
+     * 
+     * @param string $column
+     * @param mixed $value
+     * @return static[]
+     * 
+     * @throws PDOException On Error during database operation or fetching results.
+     */
+    public static function where(string $column, mixed $value): array
+    {
+        $stmt = self::$conn->prepare("SELECT * FROM " . static::$table . " WHERE $column = :value");
+        $stmt->execute([":value" => $value]);
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows === false) {
+            throw new PDOException("Error fetching results from the database (fetchAll() returned false).");
+        }
+
+        return array_map(fn(array $row) => static::objFromRow($row), $rows);
+    }
+
+    /**
+     * Get the first model where `$column` = `$value`.
+     * 
+     * @param string $column
+     * @param mixed $value
+     * @return static|null
+     * 
+     * @throws PDOException On Error during database operation or fetching results.
+     */
+    public static function firstWhere(string $column, mixed $value): ?static
+    {
+        $table = static::$table;
+        $stmt = self::$conn->prepare("SELECT * FROM $table WHERE $column = :value ORDER BY id LIMIT 1");
+        $stmt->execute([":value" => $value]);
+
+        if ($stmt->rowCount() == 0) {
+            return null;
+        }
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            throw new PDOException("Error fetching results from the database (fetch() returned false).");
+        }
+
+        return static::objFromRow($result);
     }
 
     /**

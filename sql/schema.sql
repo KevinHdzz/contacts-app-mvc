@@ -6,8 +6,8 @@ USE contacts_app_repository;
 
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(60) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    username VARCHAR(60) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     img_name VARCHAR(100) NULL
 );

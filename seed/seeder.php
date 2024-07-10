@@ -2,7 +2,8 @@
 
 require __DIR__ . "/../vendor/autoload.php";
 
-$conn = (new \ContactsApp\Database\Connection())->getConnection();
+\Dotenv\Dotenv::createImmutable(__DIR__ . "/..")->load();
+$conn = (new \ContactsApp\Database\Connector())->getConnection();
 
 try {
     if ($argv[1] == "-i") {
@@ -22,7 +23,6 @@ try {
  * Imports data into the database.
  * 
  * @param PDO $conn  The PDO connection object.
- * 
  * @throws PDOException  On error during database operation.
  */
 function import(PDO $conn): void {
@@ -39,7 +39,6 @@ function import(PDO $conn): void {
  * @param array<array<string, mixed>> $rows  The rows to insert.
  * @param string $table                      The table to insert the rows into.
  * @param PDO $conn                          The PDO connection object.
- * 
  * @throws PDOException  On error during database operation.
  */
 function insert_multiple(array $rows, string $table, PDO $conn): void {
