@@ -30,7 +30,6 @@ class AuthController {
                 ];
 
                 $validator = new FieldsValidator($data);
-                
                 $validator->check("username")->notEmpty("Username is required");
                 $validator->check("email")->notEmpty("Email is required")->isEmail("Invalid email");
                 $validator->check("password")->notEmpty("Password is required")->hasLengthOf(["min" => 6], "Password must be at least 6 characters");
@@ -52,9 +51,9 @@ class AuthController {
                 try {
                     $errors = [];
 
-                    if (count(User::where("username", $data["username"])) > 0) {
+                    if (User::exists("username", $data["username"])) {
                         $errors["username"] = "Username not available";
-                    } else if (count(User::where("email", $data["email"])) > 0) {
+                    } else if (User::exists("email", $data["email"])) {
                         $errors["email"] = "This email is already registered";
                     }
 
@@ -166,6 +165,6 @@ class AuthController {
         session_unset();
         session_destroy();
 
-        header("Location: /home");
+        header("Location: /");
     }
 }

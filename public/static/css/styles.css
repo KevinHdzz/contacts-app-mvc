@@ -81,8 +81,8 @@ body {
     text-decoration: none;
 }
 
-.navbar-logo {
-    font-size: 3rem;
+.navbar-logo a {
+    font-size: 3.2rem;
     font-weight: 500;
 }
 
@@ -90,6 +90,10 @@ body {
     display: flex;
     align-items: center;
     gap: 4rem;
+}
+
+.navbar-nav a {
+    font-size: 1.8rem;
 }
 
 .navbar-nav svg {

@@ -20,7 +20,7 @@
 		<div class="field">
 			<label for="password">Password:</label>
 			<div class="field-input">
-				<input class="password" type="password" name="password" id="password" placeholder="Your password">
+				<input class="password" type="password" name="password" id="password" placeholder="Your password (at least 6 characteres)">
 				<p class="error-msg"><?= $errors["password"] ?? "" ?></p>
 			</div>
 		</div>

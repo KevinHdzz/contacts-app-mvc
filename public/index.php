@@ -9,7 +9,7 @@ use ContactsApp\Models\User;
 
 require "../bootstrap/app.php";
 
-Router::get("/", fn () => header("Location: /home"));
+Router::get("/", [HomeController::class, "index"]);
 Router::get("/home", [HomeController::class, "home"]);
 
 Router::get("/register", [AuthController::class, "register"]);
@@ -24,14 +24,9 @@ Router::get("/api/contacts", [ApiController::class, "contacts"]);
 
 Router::get("/test", function () {
     // View::render("test", [$title = "jlsd"]);
-    debug(User::firstWhere("email", "totti@totti.com"));
+    debug(User::all());
 });
 
-// Router::get("/login", function () {
-//     session_start();
-//     debug($_SESSION);
-//     debug("Login...");
-// });
 
 try {
     Router::resolve();

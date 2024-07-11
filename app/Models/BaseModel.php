@@ -74,7 +74,9 @@ abstract class BaseModel {
             return null;
         }
 
-        return static::objFromRow($stmt->fetch(PDO::FETCH_ASSOC));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return static::objFromRow($row);
     }
 
     /**
@@ -88,14 +90,14 @@ abstract class BaseModel {
     {
         $stmt = self::$conn->prepare("SELECT * FROM " . static::$table);
         $stmt->execute();
-        
-        $result = [];
 
-        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            $result[] = static::objFromRow($row);
+        if ($stmt->rowCount() == 0) {
+            return [];
         }
 
-        return $result;
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(fn (array $row) => static::objFromRow($row), $rows);
     }
 
     /**
@@ -118,20 +120,20 @@ abstract class BaseModel {
      * @param mixed $value
      * @return static[]
      * 
-     * @throws PDOException On Error during database operation or fetching results.
+     * @throws PDOException On Error during database operation.
      */
     public static function where(string $column, mixed $value): array
     {
         $stmt = self::$conn->prepare("SELECT * FROM " . static::$table . " WHERE $column = :value");
         $stmt->execute([":value" => $value]);
 
+        if ($stmt->rowCount() == 0) {
+            return [];
+        }
+        
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($rows === false) {
-            throw new PDOException("Error fetching results from the database (fetchAll() returned false).");
-        }
-
-        return array_map(fn(array $row) => static::objFromRow($row), $rows);
+        return array_map(fn (array $row) => static::objFromRow($row), $rows);
     }
 
     /**
@@ -141,7 +143,7 @@ abstract class BaseModel {
      * @param mixed $value
      * @return static|null
      * 
-     * @throws PDOException On Error during database operation or fetching results.
+     * @throws PDOException On Error during database operation.
      */
     public static function firstWhere(string $column, mixed $value): ?static
     {
@@ -155,11 +157,29 @@ abstract class BaseModel {
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result === false) {
-            throw new PDOException("Error fetching results from the database (fetch() returned false).");
+        return static::objFromRow($result);
+    }
+
+    /**
+     * Checks if exists a model where `$column` = `$value`.
+     *
+     * @param string $column
+     * @param mixed $value
+     * @return bool Returns
+     * 
+     * @throws PDOException On Error during database operation.
+     */
+    public static function exists(string $column, mixed $value): bool
+    {
+        $table = static::$table;
+        $stmt = self::$conn->prepare("SELECT 1 FROM $table WHERE $column = :value");
+        $stmt->execute([":value" => $value]);
+
+        if ($stmt->rowCount() == 0) {
+            return false;
         }
 
-        return static::objFromRow($result);
+        return $stmt->fetchColumn() === 1;
     }
 
     /**
