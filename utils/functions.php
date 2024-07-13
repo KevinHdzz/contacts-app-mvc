@@ -4,13 +4,8 @@ function is_auth(): bool {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    
-    if (!isset($_SESSION["user"])) {
-        session_destroy();
-        return false;
-    }
 
-    return true;
+    return isset($_SESSION["user"]);
 }
 
 function is_assoc(array $array): bool {
@@ -35,18 +30,20 @@ function println(string $end = "<br>", ...$values): void {
     endforeach;
 }
 
-function sanitize_input(string $data): string {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-
-    return $data;
-}
-
 function load_scripts(array $route_scripts): void {
     foreach ($route_scripts as $path => $scripts) {
-        if ($_SERVER["PATH_INFO"] == $path) {
+        if ($_SERVER["PATH_INFO"] ?? "/" == $path) {
             echo implode("", $scripts);
         }
     }
+}
+
+// 231 208 1991
+
+function format_phone_number(string $phone): string {
+    $formatted = str_split(str_replace(" ", "", $phone));
+    array_splice($formatted, 3, 0, [" "]);
+    array_splice($formatted, 7, 0, [" "]);
+
+    return implode($formatted);
 }

@@ -28,7 +28,7 @@ class HomeController {
             header("Location: /");
             return;
         }
-        debug($_SESSION);
+        // debug($_SESSION);
         
         $contacts = Contact::where("user_id", $_SESSION["user"]["id"]);
 

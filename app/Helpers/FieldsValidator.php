@@ -48,17 +48,17 @@ class FieldsValidator {
     /**
      * Get only the first error message for each field.
      * 
-     * @example: `$this->errors = [
-     *    "username" => ["Username is required"],
-     *    "email" => ["Email is required", "Invalid email"]
-     *  ];`
+     * @example: $this->errors = [
+     *             "username" => ["Username is required"],
+     *             "email" => ["Email is required", "Invalid email"]
+     *           ];
      * 
-     *  `$firstErrors = $this->firstErrors();`
-     *   $fieldErrors will be:
-     *  `[
-     *    "username" => "Username is require",
-     *    "email" => "Email is required",
-     *  ]`
+     *           $firstErrors = $this->firstErrors();
+     *           $fieldErrors will be:
+     *           [
+     *             "username" => "Username is require",
+     *             "email" => "Email is required",
+     *           ]
      * 
      * @return array<string, string>  An associative array of fields and their first error messages.
      */
@@ -81,30 +81,77 @@ class FieldsValidator {
     }
 
     /**
-     * Validate that the current field is not empty.
+     * Validates that the current field is not empty.
      * 
-     * @param string $message [Optional]  The error message to use if the validation fails.
+     * @param string $message [Optional]  The error message to use if the current field is empty.
      * @return self                       The current instance.
      */
-    public function notEmpty(string $message = ""): self
+    public function notEmpty(string $errorMsg = ""): self
     {
         if (empty($this->array[$this->currentField])) {
-            $this->errors[$this->currentField][] = $message;
+            $this->errors[$this->currentField][] = $errorMsg;
         }
 
         return $this;
     }
 
     /**
-     * Validate that the current field is a valid email.
+     * Validates that the current field is a valid email.
      * 
-     * @param string $message The error message to use if the validation fails.
-     * @return self           The current instance.
+     * @param string $message  The error message to use if the current field is not a valid email.
+     * @return self            The current instance.
      */
-    public function isEmail(string $message = ""): self
+    public function isEmail(string $errorMsg = ""): self
     {
         if (!filter_var($this->array[$this->currentField], FILTER_VALIDATE_EMAIL)) {
-            $this->errors[$this->currentField][] = $message;
+            $this->errors[$this->currentField][] = $errorMsg;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Validates that the current field is numeric.
+     * 
+     * @param string $errorMsg  The error message to use if the current field is not numeric.
+     * @return self             The current instance.
+     */
+    public function isNumeric(string $errorMsg): self
+    {
+        if (!is_numeric($this->array[$this->currentField])) {
+            $this->errors[$this->currentField][] = $errorMsg;
+        }
+
+        return $this;
+    }
+    
+    /**
+     * Validates that the length of the current field is not less than `$minLen`.
+     * 
+     * @param int $minLen
+     * @param string $errorMsg  The rror message to use if the current field length is less than `$minLen`.
+     * @return self             The current instance.
+     */
+    public function minLength(int $minLen, string $errorMsg): self
+    {
+        if (strlen($this->array[$this->currentField]) < $minLen) {
+            $this->errors[$this->currentField][] = $errorMsg;
+        }
+
+        return $this;
+    }
+    
+    /**
+     * Validates that the length of the current field is not greater than `$maxLen`.
+     * 
+     * @param int $maxLen
+     * @param string $errorMsg  The error message to use if the current field length is greater than `$maxLen`.
+     * @return self             The current instance.
+     */
+    public function maxLength(int $maxLen, string $errorMsg): self
+    {
+        if (strlen($this->array[$this->currentField]) > $maxLen) {
+            $this->errors[$this->currentField][] = $errorMsg;
         }
 
         return $this;
@@ -117,7 +164,7 @@ class FieldsValidator {
      * @param string $message             The error message to use if the validation fails.
      * @return self                       The current instance.
      */
-    public function hasLengthOf(array $length = ["min" => 0, "max" => PHP_INT_MAX], string $message = ""): self
+    public function hasLengthOf(array $length = ["min" => 0, "max" => PHP_INT_MAX], string $errorMsg = ""): self
     {
         $length["min"] = $length["min"] ?? 0;
         $length["max"] = $length["max"] ?? PHP_INT_MAX;
@@ -126,7 +173,7 @@ class FieldsValidator {
             strlen($this->array[$this->currentField]) < $length["min"] ||
             strlen($this->array[$this->currentField]) > $length["max"]
         ) {
-            $this->errors[$this->currentField][] = $message;
+            $this->errors[$this->currentField][] = $errorMsg;
         }
 
         return $this;

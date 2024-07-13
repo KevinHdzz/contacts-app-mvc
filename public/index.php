@@ -2,6 +2,7 @@
 
 use ContactsApp\Controllers\ApiController;
 use ContactsApp\Controllers\AuthController;
+use ContactsApp\Controllers\ContactsController;
 use ContactsApp\Exceptions\HttpNotFoundException;
 use ContactsApp\Routing\Router;
 use ContactsApp\Controllers\HomeController;
@@ -18,6 +19,9 @@ Router::post("/register", [AuthController::class, "register"]);
 Router::get("/login", [AuthController::class, "login"]);
 Router::post("/login", [AuthController::class, "login"]);
 Router::get("/logout", [AuthController::class, "logout"]);
+
+Router::get("/contacts/create", [ContactsController::class, "create"]);
+Router::post("/contacts/create", [ContactsController::class, "create"]);
 
 Router::get("/api/contacts", [ApiController::class, "contacts"]);
 

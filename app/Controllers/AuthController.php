@@ -24,9 +24,9 @@ class AuthController {
             
             case "POST":
                 $data  = [
-                    "username" => trim($_POST["username"]),
-                    "email" => trim($_POST["email"]),
-                    "password" => trim($_POST["password"]),
+                    "username" => isset($_POST["username"]) ? trim($_POST["username"]) : "",
+                    "email"    => isset($_POST["email"])    ? trim($_POST["email"])    : "",
+                    "password" => isset($_POST["phone"])    ? trim($_POST["password"]) : "",
                 ];
 
                 $validator = new FieldsValidator($data);
@@ -90,6 +90,8 @@ class AuthController {
                     echo "An error occurred during registration. Please try again later.";
                     return;
                 }
+
+                break;
         }
     }
 

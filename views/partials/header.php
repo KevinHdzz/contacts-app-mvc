@@ -17,6 +17,7 @@
     <!-- scripts -->
     <?php
     load_scripts([
+        "/home" => ["<script defer src='/static/js/home.js'></script>"],
         // "/register" => ["<script defer src='/static/js/register.js'></script>"]
     ]);
     ?>
@@ -26,7 +27,7 @@
 
 <body>
     <header class="header">
-        <div class="navbar large-container">
+        <div class="navbar container">
             <div class="navbar-logo">
                 <a class="logo" href="/">ContactsApp</a>
             </div>
