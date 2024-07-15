@@ -12,14 +12,14 @@ class AuthController {
     {
         if (is_auth()) {
             header("Location: /home");
-            return;
+            exit();
         }
         
         $title = "Create Account";
 
         switch ($_SERVER["REQUEST_METHOD"]) {
             case "GET":
-                View::render("auth/register", ["title" => $title]);     
+                View::render("auth/register", ["title" => $title]);
                 break;
             
             case "POST":
@@ -38,13 +38,12 @@ class AuthController {
                     View::render("auth/register", [
                         "title" => $title,
                         "errors" => $validator->firstErrors(),
-                        "values" => [
+                        "user" => [
                             "username" => $data["username"],
                             "email" => $data["email"],
                         ],
                     ]);
-                    
-                    return;
+                    exit();
                 }
 
                 # The where and create methods can throw a PDOException
@@ -61,13 +60,13 @@ class AuthController {
                         View::render("auth/register", [
                             "title" => $title,
                             "errors" => $errors,
-                            "values" => [
+                            "user" => [
                                 "username" => $data["username"],
                                 "email" => $data["email"],
                             ],
                         ]);
                         
-                        return;
+                        exit();
                     }
 
                     // Register user in database
@@ -85,12 +84,10 @@ class AuthController {
                     ];
 
                     header("Location: /home");
-                    return;
+                    exit();
                 } catch (PDOException $e) {
-                    echo "An error occurred during registration. Please try again later.";
-                    return;
+                    exit("Upps something went wrong! Please try again later.");
                 }
-
                 break;
         }
     }
@@ -99,7 +96,7 @@ class AuthController {
     {
         if (is_auth()) {
             header("Location: /home");
-            return;
+            exit();
         }
 
         $title = "Login";
@@ -123,29 +120,29 @@ class AuthController {
                     View::render("auth/login", [
                         "title" => $title,
                         "errors" => $validator->firstErrors(),
-                        "values" => [
+                        "user" => [
                             "email" => $data["email"]
                         ],
                     ]);
 
-                    return;
+                    exit();
                 }
 
                 try {
                     $user = User::firstWhere("email", $data["email"]);
                 } catch (PDOException $e) {
-                    println(values: "An error occurred while trying to log in. Please try again later.");
-                    return;
+                    error_log($e->getMessage());
+                    exit("Upss something went wrong! Please try again later.");
                 }
 
                 if (is_null($user) || !$user->comparePassword($data["password"])) {
                     View::render("auth/login", [
                         "title" => $title,
                         "errors" => ["Wrong email or password"],
-                        "values" => ["email" => $data["email"]]
+                        "user" => ["email" => $data["email"]]
                     ]);
                     
-                    return;
+                    exit();
                 }
                 
                 session_start();
@@ -157,7 +154,7 @@ class AuthController {
                 ];
 
                 header("Location: /home");
-                return;
+                exit();
         }
     }
 
@@ -168,5 +165,6 @@ class AuthController {
         session_destroy();
 
         header("Location: /");
+        exit();
     }
 }

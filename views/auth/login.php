@@ -13,7 +13,7 @@
 		<div class="field">
 			<label for="email">Email:</label>
 			<div class="field-input">
-				<input class="email" type="email" name="email" id="email" placeholder="Your email address" value="<?= htmlspecialchars($values["email"] ?? "") ?>" autofocus>
+				<input class="email" type="email" name="email" id="email" placeholder="Your email address" value="<?= htmlspecialchars($user["email"] ?? "") ?>" autofocus>
 				<p class="error-msg"><?= $errors["email"] ?? "" ?></p>
 			</div>
 		</div>

@@ -22,6 +22,8 @@ Router::get("/logout", [AuthController::class, "logout"]);
 
 Router::get("/contacts/create", [ContactsController::class, "create"]);
 Router::post("/contacts/create", [ContactsController::class, "create"]);
+Router::get("/contacts/delete", [ContactsController::class, "delete"]);
+Router::post("/contacts/delete", [ContactsController::class, "delete"]);
 
 Router::get("/api/contacts", [ApiController::class, "contacts"]);
 
@@ -38,3 +40,5 @@ try {
     http_response_code(404);
     echo $e->getMessage();
 }
+
+debug($_GET);

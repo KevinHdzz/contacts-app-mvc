@@ -13,7 +13,7 @@ class HomeController {
     {
         if (is_auth()) {
             header("Location: /home");
-            return;
+            exit();
         }
 
         View::render("index");
@@ -26,7 +26,7 @@ class HomeController {
     {
         if (!is_auth()) {
             header("Location: /");
-            return;
+            exit();
         }
         // debug($_SESSION);
         

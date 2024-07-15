@@ -171,11 +171,20 @@ body {
     z-index: 2;
 }
 
+.contact .options .options-list .option {
+    padding: .8rem 1rem;
+}
+
 .contact .options .options-list a {
     display: inline-block;
-    padding: .8rem 1rem;
     text-decoration: none;
     color: var(--dark);
+}
+
+.contact .options .options-list form input {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
 }
 
 .contact .options .options-icon {

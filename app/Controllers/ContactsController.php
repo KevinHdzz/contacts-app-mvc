@@ -12,7 +12,7 @@ class ContactsController {
     {
         if (!is_auth()) {
             header("Location: /");
-            return;
+            exit();
         }
 
         $title = "New Contact";
@@ -46,7 +46,7 @@ class ContactsController {
                         "errors" => $validator->firstErrors(),
                         "contact" => $data,
                     ]);
-                    return;
+                    exit();
                 }
 
                 $contact = new Contact(
@@ -56,15 +56,38 @@ class ContactsController {
                 try {
                     $contact->create();
                     header("Location: /home");
-                    die();
+                    exit();
                 } catch (PDOException $e) {
                     error_log($e->getMessage());
                     http_response_code(500);
-                    echo "Something went wrong";
-                    return;
+                    exit("Upss something went wrong! Pleay try again later.");
                 }
 
                 break;
+        }
+    }
+
+    public static function delete(): void
+    {
+        $id = filter_var($_POST["id"] ?? "", FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            exit("Invalid request.");
+        }
+
+        try {
+            if (!Contact::exists("id", $id)) {
+                exit("Contact not found");
+            }
+
+            Contact::delete($id);
+
+            header("Location: /home");
+            exit();
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            exit("Upss something went wrong! Please try again later.");
         }
     }
 }

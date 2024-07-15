@@ -6,14 +6,14 @@
 		<div class="field">
 			<label for="username">Username:</label>
 			<div class="field-input">
-				<input class="username" type="text" name="username" id="username" placeholder="Your username" value="<?= htmlspecialchars($values["username"] ?? "") ?>" autofocus>
+				<input class="username" type="text" name="username" id="username" placeholder="Your username" value="<?= htmlspecialchars($user["username"] ?? "") ?>" autofocus>
 				<p class="error-msg"><?= $errors["username"] ?? "" ?></p>
 			</div>
 		</div>
 		<div class="field">
 			<label for="email">Email:</label>
 			<div class="field-input">
-				<input class="email" type="email" name="email" id="email" placeholder="Your email address" value="<?= htmlspecialchars($values["email"] ?? "") ?>">
+				<input class="email" type="email" name="email" id="email" placeholder="Your email address" value="<?= htmlspecialchars($user["email"] ?? "") ?>">
 				<p class="error-msg"><?= $errors["email"] ?? "" ?></p>
 			</div>
 		</div>

@@ -29,8 +29,11 @@
                             <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
                         </svg>
                         <div class="options-list hidden">
-                            <a href="/contacts/edit?id=<?= $contact->id ?>">Edit</a>
-                            <a href="/contacts/delete?id=<?= $contact->id ?>">Delete</a>
+                            <a class="option" href="/contacts/edit?id=<?= $contact->id ?>">Edit</a>
+                            <form action="/contacts/delete" method="post">
+                                <input type="hidden" name="id" value="<?= $contact->id ?>">
+                                <input class="option" type="submit" value="Delete">
+                            </form>
                         </div>
                     </div>
                 </div>
